@@ -1,0 +1,20 @@
+Moverse al comienzo y final de la página: w muchas veces | z muchas veces
+Moverse línea a línea: flechas o [e] hacia delante y [y] hacia atrás
+Buscar palabra word: /word + Enter y [n] forward y [N] backward
+Saltar y blablabla: ESC+SPACE ¿?
+
+1.2
+
+1) mkdir AS
+2) cd AS; echo $PWD
+3) cal > cal.txt; cat cal.txt
+4) cp cal.txt /home/urtea2014/
+5) cd ..; ls -l > files.txt
+6) ls -lt /etc | grep "^-" | head -5
+7) chmod g-rw cal.txt; chmod o-rw cal.txt
+8) chmod o-rwx /home/urtea2014/; chmod g-rwx /home/urtea2014/
+9) wc -l /etc/passwd; echo $SHELLi
+10) last -n 1 $USER
+11) tar -czvf home.tar.gz $HOME; tar -xzvf home.tar.gz -C /tmp; ls /tmp
+12) sudo find / -user urtea2014 -exec ls -ld {} \;
+13) sudo tail -n 30 /var/log/syslog
