@@ -1,3 +1,5 @@
+1.1
+
 Moverse al comienzo y final de la página: w muchas veces | z muchas veces
 Moverse línea a línea: flechas o [e] hacia delante y [y] hacia atrás
 Buscar palabra word: /word + Enter y [n] forward y [N] backward
