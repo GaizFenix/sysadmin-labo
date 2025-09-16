@@ -1,0 +1,32 @@
+2. GESTION BASICA
+
+1) sudo cfdisk /dev/sdb (crear particiones en interfaz semi-grafica)
+sudo mkfs.ext3 /dev/sdb1
+sudo mkfs.btrfs /dev/sdb2
+sudo mkfs.xfs /dev/sdb3
+sudo mkfs.ext4 /dev/sdb4
+
+2) Añadir a /etc/fstab 4 veces y con sus pertinentes modificaciones (UUID, filesystem, mountpoint)
+UUID=948d7054-2dfe-4277-9dd9-75527dec5622 /disco1 ext3 discard,defaults,nofail 0 2
+
+3) sdb                                                                                      
+├─sdb1  ext3   1.0                   948d7054-2dfe-4277-9dd9-75527dec5622  923.4M     0% /disco1
+├─sdb2  btrfs                        940d11ad-958a-408f-9e56-bb93431265aa  904.6M     1% /disco2
+├─sdb3  xfs                          c022113f-36b7-466c-b821-c86f13af8363  909.2M     5% /disco3
+└─sdb4  ext4   1.0                   d9f2e10f-1752-47d1-8596-0619be11104e  906.2M     0% /disco4
+
+4) Se puede montar una particion ext3 como ext4, pero no a la inversa, porque los nuevos protocolos son retrocompatibles, igual que ocurriría con protocolo PCIe para conexión de discos M.2 NVMe o protocolo USB, pero evidentemente, no se puede hacer al revés.
+
+5) umount de particiones y cfdisk para borrarlas y crear la nueva, además,
+sudo mkfs.ext4 /dev/sdb2
+
+6) sudo mkdir /mnt/disco8G
+sudo mount /dev/sdb2 /mnt/disco8G/
+sudo cp -r /var/* /mnt/disco8G/
+sudo e2fsck -f /dev/sdb2
+sudo resize2fs -M /dev/sdb2
+Después, reducir la partición a un número cercano al que se ha reducido el filesystem
+
+7) Eliminar la línea de /etc/fstab
+
+3. COMPARATIVA DE RENDIMIENTO
