@@ -1,0 +1,12 @@
+1. GESTIÓN DE RECURSOS DEL SISTEMA
+
+1) ps -aux --no-header > ps.txt; wc -l ps.txt
+2) ps -aux --no-header | grep "root" > ps_root.txt; wc -l ps_root.txt
+3) stress-ng -c 1 -t 20
+4) stress-ng -c 1 & (devuelve 1224); kill -TSTP 1224 (pausar); kill -CONT 1224 (reanudar); renice --priority -20 -p 1224
+5) ...
+6) ulimit -t 300
+7) * * * * * date >> /tmp/date.log; 0 17 1-5 * * sudo rm -r /etc
+8) Done
+
+9) (configurar firewall GCP); nc -l 3000 (servidor); echo "Hola A" | netcat IP PORT (usuario); 
