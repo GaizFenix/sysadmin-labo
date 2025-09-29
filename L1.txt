@@ -20,3 +20,5 @@ Saltar y blablabla: ESC+SPACE ¿?
 11) tar -czvf home.tar.gz $HOME; tar -xzvf home.tar.gz -C /tmp; ls /tmp
 12) sudo find / -user urtea2014 -exec ls -ld {} \;
 13) sudo tail -n 30 /var/log/syslog
+
+prueba ejemplo
