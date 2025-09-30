@@ -1,0 +1,19 @@
+MV3)
+sudo apt install nfs-kernel-server nfs-common
+sudo mkdir /datosNfs
+sudo vim /etc/exports
+	# MV2 (Egoitz, broker)
+	/datosNfs 34.51.225.200(rw,no_subtree_check)
+
+	# MV4 (Gaizka, webserver)
+	/datosNfs 34.51.227.129(ro,no_subtree_check)
+sudo exportfs -ra
+sudo exportfs -v
+sudo chmod o+w datosNfs/
+
+MV4)
+sudo mkdir /tmp/carpetaRemota
+sudo mount -t nfs 34.51.242.104:/datosNfs /tmp/carpetaRemota/
+(script.sh en este directorio)
+*falta programar la tarea para cada minuto en crontab -e	* * * * * script.sh
+sudo python3 -m http.server 80 (en la carpeta en la que se encuentra index.html)
