@@ -1,0 +1,61 @@
+VM1: 
+	touch scrip1.sh
+	chmod +x script1.sh
+	sudo apt install bc
+	sudo apt install mosquitto mosquitto-clients
+	
+	SCRIPT:
+		#!/bin/bash
+		# REQUIREMENTS: bc and mosquitto installed, also VM2's IP needed
+		#
+		#Generate random number (fecha + hora + numero 1 decimal y rango 10.0-24.0)
+		min=100
+		max=240
+		rand=$(( (RANDOM % (max - min + 1)) + min ))
+		rand=$(printf "%.1f" "$(bc -l <<< "$rand/10")")
+		msg="$(date +"%F %T") $rand"
+		echo "$msg"
+
+		#Send data into mqtt channel
+		mosquitto_pub -h IPVM2 -t campo/temperatura -m "$msg" -u sensor -P sensor
+		
+		***FALTARIA CRON PARA EJECUTARLO CADA MINUTO***
+		
+		
+VM2:
+	mkdir passMqtt/misUsuarios
+	sudo vim configACL
+	
+	configACL:
+	# Dar acceso de lectura y escritura a los mensajes de "campo/temperatura" a sensor
+		user sensor
+		topic readwrite campo/temperatura
+
+	mosquitto_passwd -c /home/passMqtt/misUsuarios sensor //(te pide pass y le metes sensor)
+	sudo vim /etc/mosquitto/mosquitto.conf 
+	sudo mkdir /tmp/carpetaRemota
+	sudo mount -t nfs 34.51.242.104:/datosNfs /tmp/carpetaRemota
+	
+	mosquitto.conf:
+		# Place your local configuration in /etc/mosquitto/conf.d/
+		#
+		# A full description of the configuration file is at
+		# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
+		pid_file /run/mosquitto/mosquitto.pid
+
+		persistence true
+		persistence_location /var/lib/mosquitto/
+
+		log_dest file /var/log/mosquitto/mosquitto.log
+
+		include_dir /etc/mosquitto/conf.d
+
+		listener 1883 0.0.0.0
+
+		#allow_anonymous true
+		password_file /home/yusteegoitz/passMqtt/misUsuarios
+		acl_file /home/yusteegoitz/passMqtt/configACL
+		
+	mosquitto_sub -h localhost -t campo/temperatura -u sensor -P sensor >>	/tmp/carpetaRemota/HistoricoTemperatura.txt
+
