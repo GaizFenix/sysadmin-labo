@@ -30,3 +30,36 @@ Después, reducir la partición a un número cercano al que se ha reducido el fi
 7) Eliminar la línea de /etc/fstab
 
 3. COMPARATIVA DE RENDIMIENTO
+
+1) cfdisk /dev/sdb (y eliminar en semi-GUI)
+2) Add on GCP
+3) lsblk, cfdisk /dev/sdc y /dev/sdd (y añadir particiones en GUI), sudo mkfs.ext4 /dev/sdc1 | /dev/sdd1, sudo mount /dev/sdc1 /mnt/discoBalanceado, sudo mount /dev/sdd1 /mnt/discoSSD
+4) apt update, apt install -y fio, lsblk, mkdir fiotest (dentro de cada disco), (https://cloud.google.com/compute/docs/disks/benchmarking-pd-performance-linux?hl=es-419)
+5) Done.
+6) sudo fio --name=write_iops --directory=fiotest --size=1G \
+--time_based --runtime=1m --ramp_time=2s --ioengine=libaio --direct=1 \
+--verify=0 --bs=4K --iodepth=256 --rw=randwrite --group_reporting=1  \
+--iodepth_batch_submit=256  --iodepth_batch_complete_max=256
+
+RESULTS (balanceado/SSD):
+  WRITE: bw=12.4MiB/s (13.0MB/s), 12.4MiB/s-12.4MiB/s (13.0MB/s-13.0MB/s), io=745MiB (781MB), run=60081-60081msec
+
+  WRITE: bw=24.6MiB/s (25.8MB/s), 24.6MiB/s-24.6MiB/s (25.8MB/s-25.8MB/s), io=1478MiB (1549MB), run=60042-60042msec
+
+7) sudo fio --name=read_iops --directory=fiotest --size=1G \
+--time_based --runtime=1m --ramp_time=2s --ioengine=libaio --direct=1 \
+--verify=0 --bs=4K --iodepth=256 --rw=randread --group_reporting=1 \
+--iodepth_batch_submit=256  --iodepth_batch_complete_max=256
+
+RESULTS (balanceado/SSD):
+   READ: bw=12.4MiB/s (13.0MB/s), 12.4MiB/s-12.4MiB/s (13.0MB/s-13.0MB/s), io=746MiB (782MB), run=60081-60081msec
+
+   READ: bw=24.6MiB/s (25.8MB/s), 24.6MiB/s-24.6MiB/s (25.8MB/s-25.8MB/s), io=1478MiB (1550MB), run=60041-60041msec
+
+8) El coste por gibibyte/h corresponde exactamente con la velocidad de lectura/escritura de los discos (https://cloud.google.com/compute/disks-image-pricing?hl=es_419)
+
+9) sudo umount /dev/discoSSD, (optional: limpiar con cfdisk), eliminar en GCP
+
+4. LVM Y RAID
+
+
