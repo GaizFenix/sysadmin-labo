@@ -62,4 +62,10 @@ RESULTS (balanceado/SSD):
 
 4. LVM Y RAID
 
-
+1) sudo cfdisk /dev/sdb (borrar particiones), sudo cfdisk /dev/sdc
+2) Done.
+3) sudo cfdisk ..., sudo pvcreate /dev/sdXN (para las 3 particiones), sudo vgcreate /dev/sdb1 /dev/sdb2 /dev/sdc1, sudo lvcreate grupovol -l 100%FREE -n miVolumen, sudo mkfs.ext4 /dev/grupovol/miVolumen
+4) sudo mount /dev/grupovol/miVolumen /mnt/lvm_2labo_4arik, sudo cp -r <ORIGIN> .
+5) sudo pvcreate /dev/sdc2, sudo vgextend grupovol /dev/sdc2, sudo lvextend -l +100%FREE /dev/grupovol/miVolumen, resize2fs /dev/grupovol/miVolumen
+6) sudo umount /mnt/lvm_2labo_4arik, sudo lvremove grupovol, sudo vgreduce grupovol /dev/sdb1 /dev/sdb2 /dev/sdc1 /dev/sdc2, sudo pvremove /dev/sdXN (for all partitions)
+7) 
