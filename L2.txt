@@ -68,4 +68,17 @@ RESULTS (balanceado/SSD):
 4) sudo mount /dev/grupovol/miVolumen /mnt/lvm_2labo_4arik, sudo cp -r <ORIGIN> .
 5) sudo pvcreate /dev/sdc2, sudo vgextend grupovol /dev/sdc2, sudo lvextend -l +100%FREE /dev/grupovol/miVolumen, resize2fs /dev/grupovol/miVolumen
 6) sudo umount /mnt/lvm_2labo_4arik, sudo lvremove grupovol, sudo vgreduce grupovol /dev/sdb1 /dev/sdb2 /dev/sdc1 /dev/sdc2, sudo pvremove /dev/sdXN (for all partitions)
-7) 
+7) sudo mdadm --create /dev/md0 --verbose --level=5 --raid-devices=3 /dev/sdb1 /dev/sdb2 /dev/sdc1, sudo mkfs.ext4 /dev/md0, sudo mkdir /mnt/raid5, sudo mount /dev/md0 /mnt/raid5, sudo cp -r /var /mnt/raid5
+8) sudo mdadm --verbose /dev/md0 -f /dev/sdc1, sudo mdadm /dev/md0 -r /dev/sdc1, sudo mdadm /dev/md0 -a /dev/sdc2
+9) sudo umount /dev/md0, sudo mdadm --stop /dev/md0, sudo mdadm --zero-superblock /dev/sdc1, sudo mdadm --stop /dev/md127, sudo mdadm --zero-superblock /dev/sdb1 /dev/sdb2 (Disconnect disk from instance in GCP, and delete disk)
+
+5. COPIAS DE SEGURIDAD
+
+1) sudo cfdisk /dev/sdb (y borrar)
+2) En el cfdisk, interactuar. sudo mkfs.ext4 /dev/sdb1, sudo mkdir /backups, sudo mount /dev/sdb1 /backups
+3) sudo apt install rsnapshot, sudo cp /etc/rsnapshot.conf /etc/rsnapshot.conf.default
+4) archivo de configuracion] cambiar directorio de backups a /backups (ya creado), cambiar niveles de copia y directorios a guardar en .
+5) sudo rsnapshot configtest
+6) sudo rsnapshot hourly
+7) mkdir /home/urtea2014/nuevaCarpeta, echo "Test" > /home/urtea2014/nuevaCarpeta/nuevoArchivo.txt, sudo rsnapshot hourly
+8) Comprobado. sudo rsnapshot-diff hourly.0 hourly.1 (on /backups directory) 

@@ -1,0 +1,9 @@
+urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdb
+mdadm: Unrecognised md component device - /dev/sdb
+urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdb1
+mdadm: Couldn't open /dev/sdb1 for write - not zeroing
+urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdb2
+mdadm: Couldn't open /dev/sdb2 for write - not zeroing
+urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdc
+mdadm: Unrecognised md component device - /dev/sdc
+urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdc1
