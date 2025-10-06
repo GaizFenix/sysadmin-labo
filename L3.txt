@@ -9,4 +9,27 @@
 7) * * * * * date >> /tmp/date.log; 0 17 1-5 * * sudo rm -r /etc
 8) Done
 
-9) (configurar firewall GCP); nc -l 3000 (servidor); echo "Hola A" | netcat IP PORT (usuario); 
+9) (configurar firewall GCP); nc -l 3000 (servidor); echo "Hola A" | netcat IP PORT (usuario);
+
+2. GESTION DE LOS REGISTROS DEL SISTEMA
+
+1) man logger, -p o --priority
+2) logger "Hola Mundo de Logs"
+3) sudo touch /var/log/ssh.log y chown syslog:adm a ese mismo archivo, añadir siguiente línea a /etc/rsyslog.d/50-default.conf:
+if $programname == "sshd" and $syslogseverity-text == "debug" then	/var/log/ssh.log
+En /etc/ssh/sshd_config, descomentamos (modificamos) las siguientes líneas:
+SyslogFacility AUTH
+LogLevel DEBUG
+y reiniciar procesos con:
+sudo systemctl restart syslog / syslog.service
+sudo systemctl restart ssh
+4) mkdir /var/log/syslog.old, chown syslog:adm /var/log/syslog.old y añadir esto a /etc/logrotate.d/rsyslog:
+/var/log/syslog
+{
+        rotate 12
+        monthly
+        compress
+        olddir /var/log/syslog.old
+}
+
+3. MONITORIZACION EN GOOGLE CLOUOD PLATFORM
