@@ -15,10 +15,8 @@ Saltar y blablabla: ESC+SPACE ¿?
 6) ls -lt /etc | grep "^-" | head -5
 7) chmod g-rw cal.txt; chmod o-rw cal.txt
 8) chmod o-rwx /home/urtea2014/; chmod g-rwx /home/urtea2014/
-9) wc -l /etc/passwd; echo $SHELLi
+9) wc -l /etc/passwd; echo $SHELL
 10) last -n 1 $USER
 11) tar -czvf home.tar.gz $HOME; tar -xzvf home.tar.gz -C /tmp; ls /tmp
 12) sudo find / -user urtea2014 -exec ls -ld {} \;
 13) sudo tail -n 30 /var/log/syslog
-
-prueba
