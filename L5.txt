@@ -1,0 +1,6 @@
+1) docker --help
+2) sudo docker run busybox df -h
+   sudo docker run busybox ls /etc (muchos menos archivos)
+   sudo docker run busybox ls /bin | wc -l
+   sudo docker run busybox ip addr show
+
