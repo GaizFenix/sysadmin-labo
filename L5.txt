@@ -1,6 +1,47 @@
+2. DOCKER ENGINE
+
 1) docker --help
 2) sudo docker run busybox df -h
    sudo docker run busybox ls /etc (muchos menos archivos)
    sudo docker run busybox ls /bin | wc -l
    sudo docker run busybox ip addr show
+3) sudo docker run busybox www.google.es + sudo docker stop <container_id> (no se realiza al instante)
+4) sudo docker run busybox www.google.es + sudo docker kill <container_id> (se realiza al instante)
+5) sudo docker run -it busybox
+   # ps
+   # touch home/miFichero
+   # exit
+6) sudo docker run -it busybox
+   --> No se guarda, porque las modificaciones en las imágenes son efímeras.
 
+7) sudo docker run redis
+8) sudo docker exec -it <container_name> /bin/sh
+   # ls /etc (más)
+   # ls /bin (más)
+9) redis-cli; set miVar 7; exit
+10) redis-cli; get miVar
+11) Ctrl+C; rerun; sudo docker exec -it <container_name> /bin/sh; redis-cli; get miVar
+12) docker exec --help;
+   --> -i : interactive, Keep STDIN open even if not attached (poder ejecutar varios comandos seguidos en shell)
+   --> -t : tty, Allocate a pseudo-TTY (terminal virtual)
+   --> -it : Combinacion
+
+3. IMAGENES DOCKER PROPIAS
+
+1) Archivo Dockerfile en ~/myRedis
+2) sudo docker build -t gcarmona/redis-ubuntu . (en el directorio del Dockerfile)
+3) Se han creado 2 contenedores intermedios, uno tras cada RUN
+4) sudo docker run gcarmona/redis-ubuntu; sudo docker exec -it <container_name> /bin/sh; redis-cli; set miOtraVar 8; exit; exit
+5) sudo docker run gcarmona/redis-ubuntu; sudo docker exec -it <container_name> /bin/sh; redis-cli; get miOtraVar (no mantiene su valor)
+
+6) Archivo Dockerfile en ~/myAlpineRedis
+7) sudo docker build -t gcarmona/redis-alpine . (en el directorio del Dockerfile)
+8) sudo docker run gcarmona/redis-alpine; sudo docker exec -it <container_name> /bin/sh; redis-cli; set miVar 9
+9) Ctrl+C; sudo docker images (alpine-redis: 17.8 MB / ubuntu-redis: 142 MB)
+
+10) mkdir ~/myDockerImage
+11) vim index.html (y copiar)
+12) Archivo Dockerfile en ~/myDockerImage
+13) sudo docker build -t gcarmona/simple-web .
+14) sudo docker run -p 80:1080 gcarmona/simple-web
+15) Abrir http://<IP_maquina> (y se muestra la web simple)

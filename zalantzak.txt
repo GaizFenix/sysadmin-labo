@@ -7,3 +7,82 @@ mdadm: Couldn't open /dev/sdb2 for write - not zeroing
 urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdc
 mdadm: Unrecognised md component device - /dev/sdc
 urtea2014@sysadmin:/mnt$ sudo mdadm --zero-superblock /dev/sdc1
+
+---------------------------------------------------------------
+
+Dentro de la imagen de redis (en shell):
+ls /bin -->
+    [                       dircolors                 ipcs               paste
+    tabs                    addpart                   dirname            ischroot
+    pathchk                 tac                        apt                dmesg
+    join                    perl                       tail               apt-cache
+    dnsdomainname           last                       perl5.36.0         tar
+    apt-cdrom               domainname                 lastb              pidof
+    taskset                 apt-config                 dpkg               lastlog
+    pinky                   tee                        apt-get            dpkg-deb
+    ld.so                   pldd                       tempfile           apt-key
+    dpkg-divert             ldd                        pr                 test
+    apt-mark                dpkg-maintscript-helper     link               printenv
+    tic                     arch                       dpkg-query         linux32
+    printf                  timeout                    awk                dpkg-realpath
+    linux64                 prlimit                    toe                b2sum
+    dpkg-split              ln                         ptx                touch
+    base32                  dpkg-statoverride          locale             pwd
+    tput                    base64                     dpkg-trigger       localedef
+    rbash                   tr                         basename           du
+    logger                  readlink                   true               basenc
+    echo                    login                      realpath           truncate
+    bash                    egrep                      logname            rename.ul
+    tset                    bashbug                    env                ls
+    renice                  tsort                      captoinfo          expand
+    lsattr                  reset                      tty                cat
+    expiry                  lsblk                      resizepart         tzselect
+    chage                   expr                       lscpu              rev
+    uclampset               chattr                     factor             lsfd
+    rgrep                   umount                     chcon              faillog
+    lsipc                   rm                         uname              chfn
+    fallocate               lsirq                      rmdir              uncompress
+    chgrp                   false                      lslocks            run-parts
+    unexpand                chmod                      fgrep              lslogins
+    runcon                  uniq                       choom              fincore
+    lsmem                   savelog                    unlink             chown
+    find                    lsns                       script             unshare
+    chrt                    findmnt                    mawk               scriptlive
+    update-alternatives      chsh                       flock              mcookie
+    scriptreplay            users                      cksum              fmt
+    md5sum                  sdiff                      utmpdump           clear
+    fold                    md5sum.textutils           sed                vdir
+    clear_console           getconf                    mesg               seq
+    wall                    cmp                        getent             mkdir
+    setarch                 wc                         comm               getopt
+    mkfifo                  setpriv                    wdctl              cp
+    gpasswd                 mknod                      setsid             whereis
+    csplit                  gpgv                       mktemp             setterm
+    which                   cut                        grep               more
+    sg                      which.debianutils           dash               groups
+    mount                   sh                         who                date
+    gunzip                  mountpoint                 sha1sum            whoami
+    dd                       gzexe                      mv                 sha224sum
+    x86_64                   deb-systemd-helper         gzip               namei
+    sha256sum               xargs                      deb-systemd-invoke hardlink
+    nawk                    sha384sum                  yes                ypdomainname
+    debconf                 head                       newgrp             sha512sum
+    debconf-apt-progress    hostid                     nice               shred
+    zcat                    debconf-communicate        hostname           nisdomainname
+    shuf                    zcmp                       debconf-copydb     i386
+    nl                      sleep                      zdiff              debconf-escape
+    iconv                   nohup                      sort               zdump
+    debconf-set-selections  id                         nproc              split
+    zegrep                   debconf-show               infocmp            nsenter
+    stat                    zfgrep                     delpart            infotocap
+    numfmt                  stdbuf                     zforce             df
+    install                 od                         stty               zgrep
+    diff                    ionice                     pager              su
+    zless                   diff3                      ipcmk              partx
+    sum                     zmore                      dir                ipcrm
+    passwd                  sync                       znew
+
+ls -l /bin -->
+    788357 0 lrwxrwxrwx 1 root root 7 Sep 29 00:00 /bin -> usr/bin 
+
+sudo docker run gcarmona/redis-ubuntu; sudo docker exec -it <container_name> /bin/sh; redis-cli; get miOtraVar (no mantiene su valor)
