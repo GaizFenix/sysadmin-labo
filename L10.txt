@@ -1,0 +1,116 @@
+1) PUT <IP>:9200/bank
+   Content-Type: application/x-ndjson, POST <IP>:9200/bank/_bulk con datos en Ctrl+V y \r\n al final
+2)
+2.1]
+   GET /bank/_search, params: {"size" : "20"}
+   Igual que el anterior, pero con params: {"from" : "20", "size" : "20"}
+   Igual que el anterior pero con params: {"size" : "15", "query" : {"match" : {"state" : "TX"}}}
+
+2.2]
+   GET /bank/_search, params:
+	{
+        "sort" : [
+            {
+                "age" : "asc"
+            }
+        ],
+        "query" : {
+            "match" : {
+                "state" : "LA"
+            }
+        }
+    }
+
+    Igual que el anterior, pero con params:
+    {
+        "sort" : [
+            {
+                "balance" : "asc"
+            }
+        ],
+        "query" : {
+            "match" : {
+                "state" : "NJ"
+            }
+        }
+    }
+
+2.3]
+   GET /bank/_search, params:
+   {
+        "query" : {
+            "bool" : {
+                "must" : [
+                    { "match" : { "state" : "LA" } }
+                ],
+                "must_not" : [
+                    { "term" : { "city" : "Loretto" } }
+                ],
+                "filter" : [
+                    { "range" : { "age" : { "gt" : "33" } } }
+                ]
+            }
+        }
+    }
+
+    Igual que el anterior, pero con params:
+    {
+        "query" : {
+            "bool" : {
+                "must" : [
+                    { "match" : { "state" : "OH" } }
+                ],
+                "filter" : [
+                    { "range" : { "age" : { "gt" : "39" } } }
+                ]
+            }
+        }
+    }
+
+2.4]
+   GET /bank/_search, con params:
+   {
+        "query" : {
+            "fuzzy" : {
+                "city" : "Woyming"
+            }
+        }
+    }
+
+    Igual que el anterior, pero con params:
+    {
+        "query" : {
+            "fuzzy" : {
+                "city" : "Wyomin"
+            }
+        }
+    }
+
+2.5] (!!! - el texto TIENE QUE ir en minúscula - !!!)
+   GET /bank/_search, con params:
+   {
+        "query" : {
+            "prefix" : {
+                "lastname" : "mc"
+            }
+        }
+    }
+
+    Igual que el anterior, pero con params:
+    {
+        "query" : {
+            "wildcard" : {
+                "city" : "g*field"
+            }
+        }
+    }
+
+2.6]
+   GET /bank/_search, con params:
+   {
+        "query" : {
+            "regexp" : {
+                "employer" : "a.{3,4}"
+            }
+        }
+    }
