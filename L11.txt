@@ -1,0 +1,1 @@
+El laboratorio 11 se encuentra, principalmente, desarrollado en la máquina virtual "sysadmin-8g". Se creará una copia de sus aarchivos a la carpeta L11/ en este mismo repositorio.
